@@ -1,0 +1,49 @@
+//
+//  ThirdViewController.swift
+//  iconmobileApp
+//
+//  Created by ladmin on 8/12/19.
+//  Copyright © 2019 iconmobile. All rights reserved.
+//
+
+import UIKit
+import FirebaseDatabase
+
+class ThirdViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var checkingoutname: UITextField!
+    
+    @IBOutlet weak var timestamp: UILabel!
+    
+    var ref:DatabaseReference?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getCurrentDateTime ()
+        
+        ref = Database.database().reference()
+        
+        // Do any additional setup after loading the view.
+        
+        checkingoutname.delegate = self
+        
+    }
+    
+    func getCurrentDateTime () {
+        let formatter = DateFormatter ()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .short
+        let str = formatter.string (from: Date())
+        timestamp.text = str
+        
+    }
+    
+    
+    @IBAction func checkingout(_ sender: Any) {
+        
+        ref?.child("CheckingOut").childByAutoId().setValue(checkingoutname.text)
+        ref?.child("StampOut").childByAutoId().setValue(timestamp.text)
+    }
+    
+}
+
