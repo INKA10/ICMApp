@@ -1,0 +1,101 @@
+//
+//  SecondViewController.swift
+//  iconmobileApp
+//
+//  Created by ladmin on 8/9/19.
+//  Copyright © 2019 iconmobile. All rights reserved.
+//
+
+import UIKit
+import FirebaseDatabase
+
+class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+
+    
+    //this code is to use for keyboard to disappear after users presses 'return'
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    //this code is for the user name and email address section
+    
+    @IBOutlet weak var userNameField: UITextField!
+    @IBOutlet weak var emailAddressField: UITextField!
+    
+    
+    //everything below here is for the UIPICKERVIEW & TextField
+    
+        @IBOutlet weak var textBox: UITextField!
+        @IBOutlet weak var dropDown: UIPickerView!
+    
+        
+        var list = ["Emily Levy", "Reza Abbasi", "Alex Armenta", "Herve Cecchi", "Chris Colinksy", "Kyle Davis", "Thomas Fellger", "Geoff Gannon", "Cornel Gosa", "Harlan Horbach", "Nicole Johnson", "Bri Lopez", "Taylor Rick", "Nasim Shahriarzadeh", "Chelcie Smalls", "Stephanie Song", "Jeff Stadler", "Andy Suarez", "Marc Wilczak", "Chris Eckert"]
+        
+        public func numberOfComponents(in pickerView: UIPickerView) -> Int{
+            return 1
+        }
+        
+        public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+            
+            return list.count
+        }
+        
+        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+            
+            self.view.endEditing(true)
+            return list[row]
+        }
+        
+        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+            
+            self.textBox.text = self.list[row]
+            self.dropDown.isHidden = true
+        }
+        
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            
+            if textField == self.textBox {
+                self.dropDown.isHidden = false
+                //if you don't want the users to se the keyboard type:
+                
+                textField.endEditing(true)
+            }
+        }
+    
+    //referencing from firebase database
+    
+    var ref: DatabaseReference?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+        //data into Firebase
+        
+        ref = Database.database().reference()
+        
+        // Do any additional setup after loading the view.
+        
+        userNameField.delegate = self
+        emailAddressField.delegate = self
+        
+    }
+    
+    //This section is for the checkinbutton
+    
+    @IBAction func checkintapped(_ sender: Any) {
+        
+        ref?.child("UserName").childByAutoId().setValue(userNameField.text)
+        ref?.child("Email").childByAutoId().setValue(emailAddressField.text)
+        ref?.child("Visiting").childByAutoId().setValue(textBox.text)
+
+    }
+    
+}
+
+
+
+    
+    
+
