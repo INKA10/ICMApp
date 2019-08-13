@@ -30,7 +30,7 @@ class SecondViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         @IBOutlet weak var dropDown: UIPickerView!
     
         
-        var list = ["Emily Levy", "Reza Abbasi", "Alex Armenta", "Herve Cecchi", "Chris Colinksy", "Kyle Davis", "Thomas Fellger", "Geoff Gannon", "Cornel Gosa", "Harlan Horbach", "Nicole Johnson", "Bri Lopez", "Taylor Rick", "Nasim Shahriarzadeh", "Chelcie Smalls", "Stephanie Song", "Jeff Stadler", "Andy Suarez", "Marc Wilczak", "Chris Eckert"]
+        var list = ["LIST ALL USERS - EMPTY ON PURPOSE"]
         
         public func numberOfComponents(in pickerView: UIPickerView) -> Int{
             return 1
